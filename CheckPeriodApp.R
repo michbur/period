@@ -6,6 +6,7 @@ library(gplots)
 CheckPeriodApp <- function(x, cycle = 20, loess.span = 0.1, peak.window = 5, plot = TRUE, ...) {
   
   SEL <- x[, 2]
+  POS <- x[, 1]
   
   ## make quadratic model
   nSample <- 1L:length(SEL)
@@ -32,6 +33,7 @@ CheckPeriodApp <- function(x, cycle = 20, loess.span = 0.1, peak.window = 5, plo
   names(periodStat) <- c("Period (Mean)", "Period (SD)") 
   
   list(SEL = SEL,
+       POS = POS,
        FITTED = FITTED,
        COEFS = COEFS,
        RESID = RESID,
@@ -76,6 +78,25 @@ plotAc <- function(PeriodApp) {
   title(main = paste("Estimated Periodicity:", round(mean(PeriodApp[["PERIOD"]], na.rm = TRUE), 1), "\u00B1", 
                      round(sd(PeriodApp[["PERIOD"]], na.rm = TRUE), 1)), line = -1.5, cex.main = 1.5)
 }
+
+plotHm <- function(PeriodApp) {
+  pos <- as.character(PeriodApp[["POS"]])
+  pos_x <- factor(substr(pos, 0, 1))
+  pos_y <- factor(as.numeric(vapply(pos, function(i) 
+    substr(i, 2, nchar(i)), "a", USE.NAMES = FALSE)))
+  levels(pos_y) <- levels(pos_y)[order(as.numeric(levels(pos_y)))]
+  df <- data.frame(x = pos_x, y = pos_y, val = PeriodApp[["SEL"]], lab = PeriodApp[["POS"]])
+  ggplot(df, aes(x = x, y = y, fill = val, label = lab)) +
+    geom_tile() +
+    geom_text() + 
+    scale_x_discrete("") + 
+    scale_y_discrete("") +
+    scale_fill_continuous("Cq", low = "lightblue", high = "springgreen4") + 
+    theme_bw() +
+    theme(plot.background=element_blank(),
+          panel.border = element_blank())
+}
+
 
 ## Taken from https://rtricks.wordpress.com/2009/05/03/an-algorithm-to-find-local-extrema-in-a-vector/
 findpeaks <- function(vec, bw = 1 , x.coo = c(1:length(vec)))

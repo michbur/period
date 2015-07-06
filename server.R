@@ -12,7 +12,7 @@ shinyServer(function(input, output) {
   processed.data <- reactive({
     #after loading any file it would be possible to start an example
     if(is.null(input[["input.file"]])) {
-      dat <- read.csv("sample_data.csv")
+      dat <- read.csv("StepOneCq.csv")
     } else {
       dat <- switch(input[["csv.type"]], 
                     csv1 = read.csv(input[["input.file"]][["datapath"]], 
@@ -35,7 +35,8 @@ shinyServer(function(input, output) {
       tabsetPanel(
         tabPanel("Input data", tableOutput("input.data")),
         tabPanel("Results with graphics", plotOutput("fit.plot"), 
-                 plotOutput("res.plot"), plotOutput("ac.plot"))
+                 plotOutput("res.plot"), plotOutput("ac.plot"),
+                 plotOutput("hm.plot"))
       )
     }
   })
@@ -62,6 +63,12 @@ shinyServer(function(input, output) {
   output[["ac.plot"]] <- renderPlot({
     plotAc(res.period())
   })
+  
+  output[["hm.plot"]] <- renderPlot({
+    plotHm(res.period())
+  })
+  
+
   
   output[["result.download"]] <- downloadHandler(
     filename  = "period_report.html",
