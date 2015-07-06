@@ -1,0 +1,10 @@
+Periodicity - report
+========================================================
+
+Date: `r Sys.time()`
+
+
+```{r, echo=FALSE}
+res.period()
+```
+

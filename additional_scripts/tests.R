@@ -1,0 +1,7 @@
+ml2 <- modlist(reps384, model = spl3, basecyc = 1:10, baseline = "lin")
+DATA <- data.frame(pos = 1L:length(ml2), Cq = (sapply(ml2, function(x) x$DATA[, 2]))[20, ])
+write.csv(DATA, file = "sample_data.csv", row.names = FALSE)
+PeriodData <- CheckPeriodApp(read.csv("sample_data.csv"))
+plotFit(PeriodData)
+plotRes(PeriodData)
+plotAc(PeriodData)
