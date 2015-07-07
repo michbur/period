@@ -3,6 +3,7 @@ library(shiny)
 shinyUI(pageWithSidebar(
   headerPanel("Periodicity in qPCR data"),
   sidebarPanel(
+    includeMarkdown("readme.md"),
     fileInput("input.file", "Choose CSV File (input should contain Cq data)",
               accept=c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
     checkboxInput("header", "Header", TRUE),
