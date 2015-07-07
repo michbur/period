@@ -33,10 +33,12 @@ shinyServer(function(input, output) {
                HTML('<p><img src="http://www.dr-spiess.de/ans.gif" width="55%" height="55%"/></p>'))
     } else {
       tabsetPanel(
-        tabPanel("Input data", tableOutput("input.data")),
-        tabPanel("Results with graphics", plotOutput("fit.plot"), 
-                 plotOutput("res.plot"), plotOutput("ac.plot"),
-                 plotOutput("hm.plot"))
+#         tabPanel("Results with graphics", 
+#                  plotOutput("fit.plot"), htmlOutput("fit.text"),
+#                  plotOutput("res.plot"), plotOutput("ac.plot"),
+#                  plotOutput("hm.plot")),
+        tabPanel("Results with graphics", htmlOutput("whole.report")),
+        tabPanel("Input table", tableOutput("input.data"))
       )
     }
   })
@@ -52,30 +54,56 @@ shinyServer(function(input, output) {
     processed.data()
   })
   
-  output[["fit.plot"]] <- renderPlot({
-    plotFit(res.period())
-  })
+#   output[["fit.plot"]] <- renderPlot({
+#     plotFit(res.period())
+#   })
+#   
+#   output[["fit.text"]] <- renderText({
+#     paste0("Linear model coefficient: ", signif(res.period()[["COEFS"]][1], 3), ". <br/>Quadratic model coefficient: ",
+#            signif(res.period()[["COEFS"]][2], 3), ".") 
+#   })
+#   
+#   output[["res.plot"]] <- renderPlot({
+#     plotRes(res.period())
+#   })
+#   
+#   output[["ac.plot"]] <- renderPlot({
+#     plotAc(res.period())
+#   })
+#   
+#   output[["hm.plot"]] <- renderPlot({
+#     plotHm(res.period())
+#   })
   
-  output[["res.plot"]] <- renderPlot({
-    plotRes(res.period())
-  })
+  output[["whole.report"]] <- renderText({
+      knitr::knit(input = "period_report.Rmd", 
+                  output = "period_report.md", quiet = TRUE)
+      markdown::markdownToHTML("period_report.md", output = NULL)
+      #       src <- normalizePath('period_report.Rmd')
+      #       
+      #       owd <- setwd(tempdir())
+      #       on.exit(setwd(owd))
+      #       file.copy(src, 'period_report.Rmd')
+      #       
+      #       library(rmarkdown)
+      #       render("period_report.Rmd")
+    })
   
-  output[["ac.plot"]] <- renderPlot({
-    plotAc(res.period())
-  })
-  
-  output[["hm.plot"]] <- renderPlot({
-    plotHm(res.period())
-  })
-  
-
   
   output[["result.download"]] <- downloadHandler(
     filename  = "period_report.html",
-    content <- function(file) {
-      knitr:::knit(input = "period_report.Rmd", 
-                   output = "period_report.md", quiet = TRUE)
-      markdown:::markdownToHTML("period_report.md", file)
+    content = function(file) {
+      knitr::knit(input = "period_report.Rmd", 
+                  output = "period_report.md", quiet = TRUE)
+      markdown::markdownToHTML("period_report.md", file)
+      #       src <- normalizePath('period_report.Rmd')
+      #       
+      #       owd <- setwd(tempdir())
+      #       on.exit(setwd(owd))
+      #       file.copy(src, 'period_report.Rmd')
+      #       
+      #       library(rmarkdown)
+      #       render("period_report.Rmd")
     }
   )
   

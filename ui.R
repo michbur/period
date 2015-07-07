@@ -9,7 +9,7 @@ shinyUI(pageWithSidebar(
     radioButtons("csv.type", "Type of csv file",
                  c("Dec: dot (.), Sep: comma (;)" = "csv1",
                    "Dec: comma (.), Sep: semicolon (;)" = "csv2")),
-      downloadButton("download.result", "Download results (with graphics)"),
+      downloadButton("result.download", "Download report"),
     br(),
     p("Lost? Use button below to see an example:"),
     actionButton("run.example", "Run example")

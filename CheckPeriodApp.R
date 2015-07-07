@@ -53,21 +53,21 @@ CheckPeriodApp <- function(x, cycle = 20, loess.span = 0.1, peak.window = 5, plo
 ## and show coefficients
 plotFit <- function(PeriodApp) {
   COL <- rainbow(length(PeriodApp[["FITTED"]]))
-  plot(PeriodApp[["SEL"]], col = COL, pch = 16)
+  plot(PeriodApp[["SEL"]], col = COL, pch = 16, xlab = "Sample id", ylab = "Cq")
   lines(PeriodApp[["FITTED"]], col = 1, lwd = 2)
-  title(main = paste("lin:", signif(PeriodApp[["COEFS"]][1], 3), "      quad:", 
-                     signif(PeriodApp[["COEFS"]][2], 3)), line = -1.5, cex.main = 1.5)
+  #title(main = paste("lin:", signif(PeriodApp[["COEFS"]][1], 3), "      quad:", 
+  #                   signif(PeriodApp[["COEFS"]][2], 3)), line = -1.5, cex.main = 1.5)
 }
 
 ## plot residuals with Loess fit
 ## and do Runs test & Ljung-Box Q-test
 plotRes <- function(PeriodApp) {
   COL <- rainbow(length(PeriodApp[["FITTED"]]))
-  plot(PeriodApp[["RESID"]], col = COL, pch = 16)
+  plot(PeriodApp[["RESID"]], col = COL, pch = 16, xlab = "Sample id", ylab = "Residual")
   lines(fitted(PeriodApp[["LOESS"]]), lwd = 2)
-  title(main = paste("Runs test:", signif(PeriodApp[["RUNS"]][["p.value"]], 3), 
-                     "      Ljung-Box test:", signif(PeriodApp[["BOX"]][["p.value"]], 3)),
-        line = -1.5, cex.main = 1.5)
+#   title(main = paste("Runs test:", signif(PeriodApp[["RUNS"]][["p.value"]], 3), 
+#                      "      Ljung-Box test:", signif(PeriodApp[["BOX"]][["p.value"]], 3)),
+#         line = -1.5, cex.main = 1.5)
 }
 
 ## plot autocorrelation 
@@ -75,8 +75,8 @@ plotAc <- function(PeriodApp) {
   BP <- barplot(PeriodApp[["ACF"]][["acf"]][, , 1], col = "darkgrey", space = 2)
   xPos <- BP[, 1]
   points(xPos[PeriodApp[["FP"]][["xmax"]]], 1.2 * PeriodApp[["FP"]][["ymax"]], pch = 25,  col = "darkred")
-  title(main = paste("Estimated Periodicity:", round(mean(PeriodApp[["PERIOD"]], na.rm = TRUE), 1), "\u00B1", 
-                     round(sd(PeriodApp[["PERIOD"]], na.rm = TRUE), 1)), line = -1.5, cex.main = 1.5)
+#   title(main = paste("Estimated Periodicity:", round(mean(PeriodApp[["PERIOD"]], na.rm = TRUE), 1), "\u00B1", 
+#                      round(sd(PeriodApp[["PERIOD"]], na.rm = TRUE), 1)), line = -1.5, cex.main = 1.5)
 }
 
 plotHm <- function(PeriodApp) {
