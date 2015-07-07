@@ -72,14 +72,18 @@ plotRes <- function(PeriodApp) {
 
 ## plot autocorrelation 
 plotAc <- function(PeriodApp) {
-  BP <- barplot(PeriodApp[["ACF"]][["acf"]][, , 1], col = "darkgrey", space = 2)
+  BP <- barplot(PeriodApp[["ACF"]][["acf"]][, , 1], col = "darkgrey", space = 2, ylab = "Autocorrelation of residuals",
+                ylim = c(min(PeriodApp[["ACF"]][["acf"]][, , 1]) * 1.05, max(PeriodApp[["ACF"]][["acf"]][, , 1])*1.2))
   xPos <- BP[, 1]
-  points(xPos[PeriodApp[["FP"]][["xmax"]]], 1.2 * PeriodApp[["FP"]][["ymax"]], pch = 25,  col = "darkred")
+  points(xPos[PeriodApp[["FP"]][["xmax"]]], 0.1 * mean(PeriodApp[["FP"]][["ymax"]]) + PeriodApp[["FP"]][["ymax"]], pch = 25, 
+         col = "darkred")
 #   title(main = paste("Estimated Periodicity:", round(mean(PeriodApp[["PERIOD"]], na.rm = TRUE), 1), "\u00B1", 
 #                      round(sd(PeriodApp[["PERIOD"]], na.rm = TRUE), 1)), line = -1.5, cex.main = 1.5)
 }
 
 plotHm <- function(PeriodApp) {
+  COL <- colorRampPalette(c("darkblue", "white", "darkred"))
+  pos <- as.character(PeriodApp[["POS"]])
   pos_letter <- substr(pos, 0, 1)
   pos_number <- vapply(pos, function(i) 
     substr(i, 2, nchar(i)), "a", USE.NAMES = FALSE)
