@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   output[["dynamic.tabset"]] <- renderUI({
     if(null.input()) {
       tabPanel("No input detected",
-               HTML('<p><img src="http://www.dr-spiess.de/ans.gif" width="55%" height="55%"/></p>'))
+               HTML(""))
     } else {
       tabsetPanel(
 #         tabPanel("Results with graphics", 
@@ -78,7 +78,7 @@ shinyServer(function(input, output) {
   output[["whole.report"]] <- renderText({
       knitr::knit(input = "period_report.Rmd", 
                   output = "period_report.md", quiet = TRUE)
-      markdown::markdownToHTML("period_report.md", output = NULL)
+      markdown::markdownToHTML("period_report.md", output = NULL, fragment.only = TRUE)
       #       src <- normalizePath('period_report.Rmd')
       #       
       #       owd <- setwd(tempdir())

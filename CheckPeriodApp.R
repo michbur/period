@@ -80,21 +80,13 @@ plotAc <- function(PeriodApp) {
 }
 
 plotHm <- function(PeriodApp) {
-  pos <- as.character(PeriodApp[["POS"]])
-  pos_x <- factor(substr(pos, 0, 1))
-  pos_y <- factor(as.numeric(vapply(pos, function(i) 
-    substr(i, 2, nchar(i)), "a", USE.NAMES = FALSE)))
-  levels(pos_y) <- levels(pos_y)[order(as.numeric(levels(pos_y)))]
-  df <- data.frame(x = pos_x, y = pos_y, val = PeriodApp[["SEL"]], lab = PeriodApp[["POS"]])
-  ggplot(df, aes(x = x, y = y, fill = val, label = lab)) +
-    geom_tile() +
-    geom_text() + 
-    scale_x_discrete("") + 
-    scale_y_discrete("") +
-    scale_fill_continuous("Cq", low = "lightblue", high = "springgreen4") + 
-    theme_bw() +
-    theme(plot.background=element_blank(),
-          panel.border = element_blank())
+  pos_letter <- substr(pos, 0, 1)
+  pos_number <- vapply(pos, function(i) 
+    substr(i, 2, nchar(i)), "a", USE.NAMES = FALSE)
+  
+  MAT <- matrix(PeriodApp[["RESID"]], nrow = length(unique(pos_letter)), ncol = length(unique(pos_number)),
+                dimnames = list(unique(pos_letter), unique(pos_number)), byrow = TRUE)
+  levelplot(t(MAT[nrow(MAT):1, ]), col.regions = COL(100))
 }
 
 
