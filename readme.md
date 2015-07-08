@@ -1,10 +1,10 @@
 ### About
   
-**This app** will be improved further. The code is on [GitHub](https://github.com/michbur/period_app). 
+Detect periodicity in in quantitative real-time polymerase data. The code is on [GitHub](https://github.com/michbur/period_app). 
 
 **Authors**: [Andrej-Nikolai Spiess](http://www.dr-spiess.de/), [Stefan Roediger](http://www.hs-lausitz.de/groups/multiplex-assays/bildbasierte-assays-imagebased-assays/members.html), [Michal Burdukiewicz](https://github.com/michbur).  
 
-### Readme
+### Data format
 
 The expected input data is .csv spreadsheet with two columns (see below):
 
