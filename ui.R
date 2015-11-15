@@ -1,6 +1,7 @@
 library(shiny)
+library(shinythemes)
 
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(theme = shinytheme("cerulean"), 
   headerPanel("Periodicity in qPCR data"),
   sidebarPanel(
     includeMarkdown("readme.md"),
