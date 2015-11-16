@@ -1,17 +1,17 @@
 ### About
   
-Detect periodicity in in quantitative real-time polymerase data. The code is on [GitHub](https://github.com/michbur/period_app). 
+Detect periodicity in in quantitative real-time polymerase data.  
 
 **Authors**: [Andrej-Nikolai Spiess](http://www.dr-spiess.de/), [Stefan Roediger](http://www.hs-lausitz.de/groups/multiplex-assays/bildbasierte-assays-imagebased-assays/members.html), [Michal Burdukiewicz](https://github.com/michbur).  
 
 ### Data format
 
-The expected input data is .csv spreadsheet with two columns (see below):
+The expected input data is <b>.csv</b> spreadsheet with <b>two</b> columns (see below):
 
 <table border="1" style="width:100%">
   <tr>
-    <td>Well</td>
-    <td>CQ</td> 
+    <td><b>Well</b></td>
+    <td><b>CQ</b></td> 
   </tr>
   <tr>
     <td>A1</td>
@@ -27,4 +27,6 @@ The expected input data is .csv spreadsheet with two columns (see below):
   </tr>
 </table>
 
+<br>
+If the input data is in one row (column-wise), check "Cq values are in one row" below.
  

@@ -23,6 +23,13 @@ shinyServer(function(input, output) {
                                      header = input[["header"]]))
       if(!input[["header"]])
         colnames(dat) <- paste0("Column", 1L:ncol(dat))
+      
+      if(input[["transpose"]]) {
+        dat <- t(dat)        
+        dat <- dat[-1, ]
+        rownames(dat) <- NULL
+        colnames(dat) <- c("Well", "Cq")        
+      }
     }
     
     dat
@@ -35,20 +42,15 @@ shinyServer(function(input, output) {
                HTML("No input detected. <br> Select input file or example using the left panel."))
     } else {
       tabsetPanel(
-#         tabPanel("Results with graphics", 
-#                  plotOutput("fit.plot"), htmlOutput("fit.text"),
-#                  plotOutput("res.plot"), plotOutput("ac.plot"),
-#                  plotOutput("hm.plot")),
         tabPanel("Results with graphics", htmlOutput("whole.report")),
         tabPanel("Input table", tableOutput("input.data"))
       )
     }
   })
   
-  res.period <- reactive({
+  res.period <- reactive({  
     CheckPeriodApp(processed.data())
   })
-  
   
   create.md <- reactive({  
     knitr::knit(input = "period_report.Rmd", 
@@ -59,12 +61,10 @@ shinyServer(function(input, output) {
     processed.data()
   })
   
-
-  
   output[["whole.report"]] <- renderText({
     create.md()
-    markdown::markdownToHTML("period_report.md", output = NULL, fragment.only = TRUE)
-  })
+      markdown::markdownToHTML("period_report.md", output = NULL, fragment.only = TRUE)
+    })
   
   
   output[["result.download"]] <- downloadHandler(

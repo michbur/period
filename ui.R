@@ -1,20 +1,20 @@
 library(shiny)
-library(shinythemes)
 
-shinyUI(fluidPage(theme = shinytheme("cerulean"), 
+shinyUI(pageWithSidebar(
   headerPanel("Periodicity in qPCR data"),
   sidebarPanel(
     includeMarkdown("readme.md"),
+    p("Lost? Use button below to see an example:"),
+    actionButton("run.example", "Run example"),
+    br(), br(),
     fileInput("input.file", "Choose CSV File (input should contain Cq data)",
               accept=c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
     checkboxInput("header", "Header", TRUE),
+    checkboxInput("transpose", "Cq values are in one row", FALSE),
     radioButtons("csv.type", "Type of csv file",
                  c("Dec: dot (.), Sep: comma (;)" = "csv1",
-                   "Dec: comma (.), Sep: semicolon (;)" = "csv2")),
-      downloadButton("result.download", "Download report"),
-    br(),
-    p("Lost? Use button below to see an example:"),
-    actionButton("run.example", "Run example")
+                   "Dec: comma (,), Sep: semicolon (;)" = "csv2")),
+    downloadButton("result.download", "Download report")    
   ),
   mainPanel(
     uiOutput("dynamic.tabset") 
