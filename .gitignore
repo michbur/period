@@ -2,6 +2,6 @@
 .Rhistory
 .RData
 period_app.Rproj
-period_report.md
-figure/
 period.Rproj
+report_generation/figure
+report_generation/period_report.md

@@ -1,6 +1,8 @@
 library(shiny)
 source("CheckPeriodApp.R")
 
+setwd("./report_generation/")
+
 # server for the Shiny app
 shinyServer(function(input, output) {
   
@@ -43,17 +45,14 @@ shinyServer(function(input, output) {
     }
   })
   
-  res.period <- reactive({  
-    dat <- processed.data()
-    
-    res <- CheckPeriodApp(dat)
-    res
+  res.period <- reactive({
+    CheckPeriodApp(processed.data())
   })
   
   
   create.md <- reactive({  
-    knitr::knit(input = ".\report_generation\period_report.Rmd", 
-                output = ".\report_generation\period_report.md", quiet = TRUE)
+    knitr::knit(input = "period_report.Rmd", 
+                output = "period_report.md", quiet = TRUE)
   })
   
   output[["input.data"]] <- renderTable({
@@ -63,14 +62,15 @@ shinyServer(function(input, output) {
 
   
   output[["whole.report"]] <- renderText({
-      markdown::markdownToHTML(".\report_generation\period_report.md", output = NULL, fragment.only = TRUE)
-    })
+    create.md()
+    markdown::markdownToHTML("period_report.md", output = NULL, fragment.only = TRUE)
+  })
   
   
   output[["result.download"]] <- downloadHandler(
     filename  = "period_report.html",
     content = function(file) {
-      markdown::markdownToHTML(".\report_generation\period_report.md", file)
+      markdown::markdownToHTML("period_report.md", file)
     }
   )
   
