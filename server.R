@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   output[["dynamic.tabset"]] <- renderUI({
     if(null.input()) {
       tabPanel("No input detected",
-               HTML(""))
+               HTML("No input detected. <br> Select input file or example using the left panel."))
     } else {
       tabsetPanel(
 #         tabPanel("Results with graphics", 
@@ -52,8 +52,8 @@ shinyServer(function(input, output) {
   
   
   create.md <- reactive({  
-    knitr::knit(input = "period_report.Rmd", 
-                output = "period_report.md", quiet = TRUE)
+    knitr::knit(input = ".\report_generation\period_report.Rmd", 
+                output = ".\report_generation\period_report.md", quiet = TRUE)
   })
   
   output[["input.data"]] <- renderTable({
@@ -63,14 +63,14 @@ shinyServer(function(input, output) {
 
   
   output[["whole.report"]] <- renderText({
-      markdown::markdownToHTML("period_report.md", output = NULL, fragment.only = TRUE)
+      markdown::markdownToHTML(".\report_generation\period_report.md", output = NULL, fragment.only = TRUE)
     })
   
   
   output[["result.download"]] <- downloadHandler(
     filename  = "period_report.html",
     content = function(file) {
-      markdown::markdownToHTML("period_report.md", file)
+      markdown::markdownToHTML(".\report_generation\period_report.md", file)
     }
   )
   
