@@ -1,7 +1,8 @@
 library(shiny)
 
 shinyUI(pageWithSidebar(
-  headerPanel("Periodicity in qPCR data"),
+  tags$head(h1("Periodicity in qPCR data"), includeScript("ga.js")),
+  #headerPanel("Periodicity in qPCR data"),
   sidebarPanel(
     includeMarkdown("readme.md"),
     p("Lost? Use button below to see an example:"),

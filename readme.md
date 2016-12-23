@@ -2,7 +2,9 @@
   
 Detect periodicity in in quantitative real-time polymerase data.  
 
-**Authors**: [Andrej-Nikolai Spiess](http://www.dr-spiess.de/), [Stefan Roediger](http://www.hs-lausitz.de/groups/multiplex-assays/bildbasierte-assays-imagebased-assays/members.html), [Michal Burdukiewicz](https://github.com/michbur).  
+**Authors**: [Andrej-Nikolai Spiess](http://www.dr-spiess.de/), [Stefan Roediger](https://www.b-tu.de/fg-multiparameterdiagnostik/projekte/bildbasierte-assays-imagebased-assays-2013-2018/members), [Michal Burdukiewicz](https://github.com/michbur).  
+
+This application is a part of [pcRuniveRsum](michbur.github.io/pcRuniveRsum/).
 
 ### Data format
 
