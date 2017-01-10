@@ -29,7 +29,7 @@ shinyServer(function(input, output) {
   #dabset before and after data input
   output[["dynamic.tabset"]] <- renderUI({
     if(null.input()) {
-      tabPanel("No input detected",
+      tabPanel("No input detected. Load your data or run example.",
                HTML(""))
     } else {
       tabsetPanel(
