@@ -2,6 +2,7 @@ library(qpcR)
 library(lmtest)
 library(lawstat)
 library(gplots)
+library(lattice)
 
 CheckPeriodApp <- function(x, cycle = 20, loess.span = 0.1, peak.window = 5, plot = TRUE, ...) {
   
@@ -81,7 +82,7 @@ plotAc <- function(PeriodApp) {
 #                      round(sd(PeriodApp[["PERIOD"]], na.rm = TRUE), 1)), line = -1.5, cex.main = 1.5)
 }
 
-plotHm <- function(PeriodApp) {
+plotHm <- function(PeriodApp) { 
   COL <- colorRampPalette(c("darkblue", "white", "darkred"))
   pos <- as.character(PeriodApp[["POS"]])
   pos_letter <- substr(pos, 0, 1)

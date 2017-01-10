@@ -10,7 +10,7 @@ output:
 
 # Periodicity report
 
-Report generated on `r Sys.time()` using [period_app](https://michbur.shinyapps.io/period_app).
+Report generated on `r Sys.time()` using [period_app](http://www.smorfland.uni.wroc.pl/shiny/period_app/).
 
 ## Data with fitted quadratic model
 

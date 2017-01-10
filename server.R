@@ -1,6 +1,8 @@
 library(shiny)
 source("CheckPeriodApp.R")
 
+setwd("./report_generation/")
+
 # server for the Shiny app
 shinyServer(function(input, output) {
   
@@ -21,6 +23,13 @@ shinyServer(function(input, output) {
                                      header = input[["header"]]))
       if(!input[["header"]])
         colnames(dat) <- paste0("Column", 1L:ncol(dat))
+      
+      if(input[["transpose"]]) {
+        dat <- t(dat)        
+        dat <- dat[-1, ]
+        rownames(dat) <- NULL
+        colnames(dat) <- c("Well", "Cq")        
+      }
     }
     
     dat
@@ -29,14 +38,11 @@ shinyServer(function(input, output) {
   #dabset before and after data input
   output[["dynamic.tabset"]] <- renderUI({
     if(null.input()) {
-      tabPanel("No input detected. Load your data or run example.",
-               HTML(""))
+      tabPanel("No input detected",
+               HTML("No input detected. <br> Select input file or example using the left panel."))
+
     } else {
       tabsetPanel(
-#         tabPanel("Results with graphics", 
-#                  plotOutput("fit.plot"), htmlOutput("fit.text"),
-#                  plotOutput("res.plot"), plotOutput("ac.plot"),
-#                  plotOutput("hm.plot")),
         tabPanel("Results with graphics", htmlOutput("whole.report")),
         tabPanel("Input table", tableOutput("input.data"))
       )
@@ -44,66 +50,28 @@ shinyServer(function(input, output) {
   })
   
   res.period <- reactive({  
-    dat <- processed.data()
-    
-    res <- CheckPeriodApp(dat)
-    res
+    CheckPeriodApp(processed.data())
+  })
+  
+  create.md <- reactive({  
+    knitr::knit(input = "period_report.Rmd", 
+                output = "period_report.md", quiet = TRUE)
   })
   
   output[["input.data"]] <- renderTable({
     processed.data()
   })
   
-#   output[["fit.plot"]] <- renderPlot({
-#     plotFit(res.period())
-#   })
-#   
-#   output[["fit.text"]] <- renderText({
-#     paste0("Linear model coefficient: ", signif(res.period()[["COEFS"]][1], 3), ". <br/>Quadratic model coefficient: ",
-#            signif(res.period()[["COEFS"]][2], 3), ".") 
-#   })
-#   
-#   output[["res.plot"]] <- renderPlot({
-#     plotRes(res.period())
-#   })
-#   
-#   output[["ac.plot"]] <- renderPlot({
-#     plotAc(res.period())
-#   })
-#   
-#   output[["hm.plot"]] <- renderPlot({
-#     plotHm(res.period())
-#   })
-  
   output[["whole.report"]] <- renderText({
-      knitr::knit(input = "period_report.Rmd", 
-                  output = "period_report.md", quiet = TRUE)
+    create.md()
       markdown::markdownToHTML("period_report.md", output = NULL, fragment.only = TRUE)
-      #       src <- normalizePath('period_report.Rmd')
-      #       
-      #       owd <- setwd(tempdir())
-      #       on.exit(setwd(owd))
-      #       file.copy(src, 'period_report.Rmd')
-      #       
-      #       library(rmarkdown)
-      #       render("period_report.Rmd")
     })
   
   
   output[["result.download"]] <- downloadHandler(
     filename  = "period_report.html",
     content = function(file) {
-      knitr::knit(input = "period_report.Rmd", 
-                  output = "period_report.md", quiet = TRUE)
       markdown::markdownToHTML("period_report.md", file)
-      #       src <- normalizePath('period_report.Rmd')
-      #       
-      #       owd <- setwd(tempdir())
-      #       on.exit(setwd(owd))
-      #       file.copy(src, 'period_report.Rmd')
-      #       
-      #       library(rmarkdown)
-      #       render("period_report.Rmd")
     }
   )
   
