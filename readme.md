@@ -2,13 +2,11 @@
   
 Detect periodicity in in quantitative real-time polymerase data.  
 
-**Authors**: [Andrej-Nikolai Spiess](http://www.dr-spiess.de/), [Stefan Roediger](https://www.b-tu.de/fg-multiparameterdiagnostik/projekte/bildbasierte-assays-imagebased-assays-2013-2018/members), [Michal Burdukiewicz](https://github.com/michbur).  
-
-This application is a part of [pcRuniveRsum](https://michbur.github.io/pcRuniveRsum/).
-
 ### Reference
 
-[A. Spiess, S. Roediger, M. Burdukiewicz, et al. “System-specific periodicity in quantitative real-time polymerase chain reaction data questions threshold-based quantitation”. Scientific Reports 6 (2016), p. 38951. DOI: 10.1038/srep38951](http://www.nature.com/srep/2016/161213/srep38951/full/srep38951.html).
+[A. Spiess, S. Roediger, M. Burdukiewicz, T. Volksdorf and J. Tellinghuisen. “System-specific periodicity in quantitative real-time polymerase chain reaction data questions threshold-based quantitation”. Scientific Reports 6 (2016), p. 38951. DOI: 10.1038/srep38951](http://www.nature.com/srep/2016/161213/srep38951/full/srep38951.html).
+
+This application is a part of [pcRuniveRsum](https://michbur.github.io/pcRuniveRsum/).
 
 ### Data format
 

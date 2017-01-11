@@ -48,3 +48,6 @@ Estimated periodicity: `r paste(round(mean(res.period()[["PERIOD"]], na.rm = TRU
 plotHm(res.period())
 ```
 
+## References
+
+[A. Spiess, S. Roediger, M. Burdukiewicz, T. Volksdorf and J. Tellinghuisen. “System-specific periodicity in quantitative real-time polymerase chain reaction data questions threshold-based quantitation”. Scientific Reports 6 (2016), p. 38951. DOI: 10.1038/srep38951](http://www.nature.com/srep/2016/161213/srep38951/full/srep38951.html).
